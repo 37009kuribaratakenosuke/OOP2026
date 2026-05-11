@@ -21,8 +21,12 @@ namespace Exercise01 {
                 int minutes = song.Length / 60;
                 int seconds = song.Length % 60;
 
+                
+
+               
+
                 Console.WriteLine(
-                    $"{song.Title} , {song.ArtistName} , {minutes}:{seconds}"
+                    $"{song.Title} , {song.ArtistName} , {minutes}:{seconds:00}"
                 );
             }
         }
