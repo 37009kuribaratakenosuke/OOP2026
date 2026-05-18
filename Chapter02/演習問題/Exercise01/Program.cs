@@ -16,16 +16,13 @@ namespace Exercise01 {
 
         private static void PrintSongs(Song[] songs) {
 
+
+
             foreach (var song in songs) {
 
                 int minutes = song.Length / 60;
                 int seconds = song.Length % 60;
-
-                
-
-               
-
-                Console.WriteLine(
+                    Console.WriteLine(
                     $"{song.Title} , {song.ArtistName} , {minutes}:{seconds:00}"
                 );
             }
