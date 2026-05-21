@@ -28,22 +28,40 @@ namespace Exercise02 {
             //できたらGitのコメント「問題3.2.1完成」
             var name = Console.ReadLine();
 
+            var index = cities.FindIndex(n => n == name);
+
+            if(index >= 0) {
+                Console.WriteLine($"{name}は{index + 1}番目に格納されています");
+            } else {
+                Console.WriteLine(-1);
+            }
 	        
         }
 
         private static void Exercise2_2(List<string> cities) {
-	        //できたらGitのコメント「問題3.2.2完成」
-	        
+            //できたらGitのコメント「問題3.2.2完成」
+
+            int count = cities.Count(x => x.Contains("o"));
+
+            Console.WriteLine($"小文字の o を含む都市は {count} 個です");
         }
 
         private static void Exercise2_3(List<string> cities) {
-	        //できたらGitのコメント「問題3.2.3完成」
-	        
+            //できたらGitのコメント「問題3.2.3完成」
+            var selected = cities.Where(s => s.Contains('o')).ToArray();
+            foreach(var name in selected) {
+                Console.WriteLine(name);
+            }
         }
 
         private static void Exercise2_4(List<string> cities) {
-	        //できたらGitのコメント「問題3.2.4完成」
-	        
+            //できたらGitのコメント「問題3.2.4完成」
+
+            var select = cities.Where(s => s.StartsWith('B')).Select(s => s.Length);
+
+            foreach (var item in select) {
+                Console.WriteLine(item);
+            }
         }
     }
 }
