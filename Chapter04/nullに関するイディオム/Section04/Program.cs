@@ -46,9 +46,11 @@ namespace Section04 {
             int c = 30;
 
             Console.Write("入れ替え前:");
-            Console.WriteLine("a =" + a + "b = " + b);
+            Console.WriteLine("a =" + a + "b = " + b + "c=" + c);
+            
+       
 
-            (b, a) = (a, b);
+            (b, a,c) = (a, b,900);
                 #endregion
         }
 
