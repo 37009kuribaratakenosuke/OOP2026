@@ -59,11 +59,23 @@ namespace Exercise01 {
 
 
         private static void Exercise2(List<string> langs) {
-          
+
+            Console.WriteLine("LINQで出力");
+
+            var result = langs.Where(lang => lang.Contains("S"));
+
+            foreach(var lang in result) {
+                Console.WriteLine(lang);
+            }
+
         }
 
         private static void Exercise3(List<string> langs) {
-          
+
+            string result = langs.Find(lang => lang.Length == 10) ?? "unknown";
+
+            Console.WriteLine(result);
+
         }
     }
 }
