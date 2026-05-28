@@ -35,12 +35,43 @@ namespace Exercise02 {
 
         private static void Exercise2() {
             //switch文を使用
+            Console.Write("点数を入力してください: ");
 
+            int score = int.Parse(Console.ReadLine());
+
+            switch (score) {
+                case < 0:
+                    Console.WriteLine(score);
+                    break;
+
+                case < 100:
+                    Console.WriteLine(score * 2);
+                    break;
+
+                case < 500:
+                    Console.WriteLine(score * 3);
+                    break;
+
+                default:
+                    Console.WriteLine(score);
+                    break;
+            }
         }
 
         private static void Exercise3() {
             //switch式を使用
+            Console.Write("点数を入力してください: ");
 
+            int score = int.Parse(Console.ReadLine());
+
+            int result = score switch {
+                < 0 => score,
+                < 100 => score * 2,
+                < 500 => score * 3,
+                _ => score
+            };
+
+            Console.WriteLine(result);
         }
     }
 }
