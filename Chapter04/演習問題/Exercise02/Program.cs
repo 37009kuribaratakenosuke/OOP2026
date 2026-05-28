@@ -18,18 +18,18 @@ namespace Exercise02 {
 
             Console.Write("点数を入力してください: ");
 
-            int score = int.Parse(Console.ReadLine());
-
-            if (score < 0) {
-                Console.WriteLine(score);
-            }else if (score < 100) {
-                Console.WriteLine(score * 2);
-            } else if (score < 500) {
-                Console.WriteLine(score * 3);
-            } else {
-                Console.WriteLine(score);
+            var line = Console.ReadLine();
+            if (int.TryParse(line, out var score)) {
+                if (score < 0) {
+                    Console.WriteLine(score);
+                } else if (score < 100) {
+                    Console.WriteLine(score * 2);
+                } else if (score < 500) {
+                    Console.WriteLine(score * 3);
+                } else {
+                    Console.WriteLine(score);
+                }
             }
-
 
         }
 
@@ -37,24 +37,25 @@ namespace Exercise02 {
             //switch文を使用
             Console.Write("点数を入力してください: ");
 
-            int score = int.Parse(Console.ReadLine());
+            var line = Console.ReadLine();
+            if (int.TryParse(line, out var score)) {
+                switch (score) {
+                    case < 0:
+                        Console.WriteLine(score);
+                        break;
 
-            switch (score) {
-                case < 0:
-                    Console.WriteLine(score);
-                    break;
+                    case < 100:
+                        Console.WriteLine(score * 2);
+                        break;
 
-                case < 100:
-                    Console.WriteLine(score * 2);
-                    break;
+                    case < 500:
+                        Console.WriteLine(score * 3);
+                        break;
 
-                case < 500:
-                    Console.WriteLine(score * 3);
-                    break;
-
-                default:
-                    Console.WriteLine(score);
-                    break;
+                    default:
+                        Console.WriteLine(score);
+                        break;
+                }
             }
         }
 
@@ -62,16 +63,20 @@ namespace Exercise02 {
             //switch式を使用
             Console.Write("点数を入力してください: ");
 
-            int score = int.Parse(Console.ReadLine());
+            var line = Console.ReadLine();
+            if (int.TryParse(line, out var score)) {
+                int result = score switch {
+                    < 0 => score,
+                    < 100 => score * 2,
+                    < 500 => score * 3,
+                    _ => score
+                };
 
-            int result = score switch {
-                < 0 => score,
-                < 100 => score * 2,
-                < 500 => score * 3,
-                _ => score
-            };
-
-            Console.WriteLine(result);
+                Console.WriteLine(result);
+            }
         }
+
+
+
     }
 }
