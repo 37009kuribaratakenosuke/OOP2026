@@ -1,4 +1,6 @@
 ﻿
+using Exercise01;
+
 namespace Exercise02 {
     internal class Program {
         static void Main(string[] args) {
@@ -10,6 +12,8 @@ namespace Exercise02 {
                 new YearMonth(2010, 9),
                 new YearMonth(2024, 12),
             };
+
+           
 
             Console.WriteLine("5.2.2");
             Exercise2(ymCollection);
@@ -23,11 +27,18 @@ namespace Exercise02 {
         }
 
         private static void Exercise2(YearMonth[] ymCollection) {
-            
+            foreach (var ym in ymCollection) {
+                Console.WriteLine($"{ym.Year}/{ym.Month}");
+            }
         }
 
-        private static void Exercise4(YearMonth[] ymCollection) {
-            
+        private static YearMonth? Exercise4(YearMonth[] ymCollection) {
+            foreach (var ym in ymCollection) {
+                if (ym.Year >= 2001 && ym.Year <= 2100) {
+                    return ym;
+                }
+            }
+            return null;
         }
 
         private static void Exercise5(YearMonth[] ymCollection) {
