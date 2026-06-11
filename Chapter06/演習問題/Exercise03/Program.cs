@@ -64,16 +64,12 @@ namespace Exercise03 {
                 ToDictionary(num =>((char)num).ToString(), num => 0);
 
 
-            var dict = new SortedDictionary<char, int>();
-            foreach(var c in str) {
-                if (dict.ContainsKey(c))
-                    dict[c]++;
-                else
-                    dict[c] = 1;
-            }
-            foreach(var word in dict) {
+            //var dict = new SortedDictionary<char, int>();
+            foreach (var word in alphDicCount) {
                 Console.WriteLine(word.Key + ":" + word.Value);
             }
+
+            var array = Enumerable.Repeat(0, 26).ToArray();
         }
     }
 }
