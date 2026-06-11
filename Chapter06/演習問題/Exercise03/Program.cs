@@ -70,6 +70,19 @@ namespace Exercise03 {
             }
 
             var array = Enumerable.Repeat(0, 26).ToArray();
+            foreach(var alph in str) {
+                array[alph - 'a']++;
+            }
+
+            for(char ch = 'a'; ch <= 'z'; ch++) {
+                Console.WriteLine($"{ch}:{array[ch-'a']}");
+            }
+
+           for (char ch ='a';ch <= 'z'; ch++) {
+                Console.WriteLine($"{ ch}:{ str.Count(c => c == ch)}");
+            }
+
+
         }
     }
 }
