@@ -56,7 +56,7 @@ namespace Exercise01 {
             var results = numbers.Distinct();
             int count =  0;
            foreach(var num in results) {
-                if(num >= 10) {
+                if(num > 10) {
                     count++;
                 }
             }
