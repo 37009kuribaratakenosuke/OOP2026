@@ -37,31 +37,61 @@ namespace Exercise02 {
         }
 
         private static void Exercise1(List<Book> books) {
-            
+            var book = books
+                .FirstOrDefault(b => b.Title == "ワンダフル・C#ライフ");
+
+
+            Console.WriteLine($"価格: {book.Price}円");
+            Console.WriteLine($"ページ数: {book.Pages}ページ");
         }
 
         private static void Exercise2(List<Book> books) {
-            
+            var count = books.Count(b => b.Title.Contains("C#"));
+
+            Console.WriteLine(count);
         }
 
         private static void Exercise3(List<Book> books) {
-            
+            var count = books
+                 .Where(b => b.Title.Contains("C#"))
+                 .Average(b => b.Pages);
+
+            Console.WriteLine(count);
         }
 
         private static void Exercise4(List<Book> books) {
-            
+            var find = books.Find(b => b.Price > 4000);
+
+            Console.WriteLine(find.Title);
         }
 
         private static void Exercise5(List<Book> books) {
-            
+            var find = books
+                .Where(b => b.Price < 4000)
+                .Max(b => b.Pages);
+
+            Console.WriteLine(find);
         }
 
         private static void Exercise6(List<Book> books) {
-            
+            var narabikae = books
+                .Where(b => b.Pages > 400)
+                .OrderByDescending(b => b.Price);
+
+            foreach(var book in narabikae) {
+                Console.WriteLine(book.Title);
+            }
+           
         }
 
         private static void Exercise7(List<Book> books) {
-            
+            var find = books
+                .Where(b => b.Title.Contains("C#") && b.Pages <= 500);
+
+            foreach (var book in find) {
+                Console.WriteLine(book.Title);
+            }
+
         }
     }
 }
