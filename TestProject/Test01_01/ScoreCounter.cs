@@ -7,7 +7,7 @@
             _score = ReadScore(filePath);
         }
 
-        //メソッドの概要：
+        //メソッドの概要：splitで分けてname,subject,scoreをリストに追加している
         private static IEnumerable<Student> ReadScore(string filePath) {
             var sales = new List<Student>();
             var lines = File.ReadAllLines(filePath);
@@ -28,7 +28,7 @@
             return sales;
         }
 
-        //メソッドの概要：
+        //メソッドの概要：学生の点数を求めている   
         public IDictionary<string, int> GetPerStudentScore() {
             var dict = new Dictionary<string, int>();
 
