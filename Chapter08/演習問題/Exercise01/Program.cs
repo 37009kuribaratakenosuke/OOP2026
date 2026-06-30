@@ -11,11 +11,41 @@ namespace Exercise01 {
         }
 
         private static void Exercise1(string text) {
-            
+            var dict = new Dictionary<char, int>();
+
+            foreach (char c in text.ToUpper()) {
+                if ('A' <= c && c <= 'Z') {
+                    if (dict.ContainsKey(c))
+                        dict[c]++;
+                    else
+                        dict[c] = 1;
+                }
+            }
+
+            foreach (var item in dict.OrderBy(x => x.Key)) {
+                Console.WriteLine($"{item.Key}:{item.Value}");
+            }
+
+
+
+
         }
 
         private static void Exercise2(string text) {
-            
+            var dict = new SortedDictionary<char, int>();
+
+            foreach (char c in text.ToUpper()) {
+                if ('A' <= c && c <= 'Z') {
+                    if (dict.ContainsKey(c))
+                        dict[c]++;
+                    else
+                        dict[c] = 1;
+                }
+                
+                }
+            foreach (var item in dict) {
+                Console.WriteLine($"{item.Key}:{item.Value}");
+            }
         }
     }
 }
