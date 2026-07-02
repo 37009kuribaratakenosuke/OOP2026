@@ -80,32 +80,33 @@
         //問題３　昇順に並べて表示（遅延実行とする）
         //　　　　出力結果【12 14 17 20 31 35 40 48 53 76 87 91 94】
         private static void Exercise03(int[] numbers) {
-            
+            var result = numbers.OrderBy(x => x);
+            Console.WriteLine(String.Join(" ",result));
         }
 
         //問題４　10以上50以下の数字のみを表示（即時実行でも可とする）
         //　　　　出力結果【12 14 20 40 35 31 17 48】
         private static void Exercise04(int[] numbers) {
             var num = numbers
-                .Where(n => n <= 10 && n >= 50)
-                .ToList();
+                .Where(n => n >= 10 && n <= 50);
 
-            Console.WriteLine(num);
+            Console.WriteLine(String.Join(" ",num));
         }
 
         //問題５　Countメソッドを使い、小文字の'n'が含まれている都市名がいくつあるかカウントして結果を表示
         //　　　　出力結果【5】
         private static void Exercise05(List<string> cities) {
-            var cite = cities.Count(c => c.Contains("n"));
+            var city = cities.Count(c => c.Contains("n"));
 
-            Console.WriteLine(cite);
+            Console.WriteLine(city);
         
         }
 
         //問題６　全都市数
         //　　　　出力結果【8】
         private static void Exercise06(List<string> cities) {
-        
+            var city = cities.Count;
+            Console.WriteLine(city);
         }
 
         //問題７　各都市名をアルファベット順（昇順）に出力
