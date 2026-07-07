@@ -120,8 +120,11 @@
         //          Paris
         //          Tokyo】
         private static void Exercise07(List<string> cities) {
-        
+            var result = cities.OrderBy(c => c);
 
+            foreach (var city in result) {
+                Console.WriteLine(city);
+            }
         }
 
         //問題８　各都市の文字数
@@ -135,11 +138,9 @@
         //　　　　  Canberra : 8文字
         //　　　　  Hong Kong : 9文字】
         private static void Exercise08(List<string> cities) {
-
-            foreach(var item in cities) {
-                Console.WriteLine($"{item}:{item.Length}文字数");
+            foreach (var item in cities) {
+                Console.WriteLine($"{item} : {item.Length}文字");
             }
-        
         }
 
         //問題９　各都市名と文字数を文字数の昇順で表示
@@ -153,9 +154,11 @@
         //          New Delhi : 9文字
         //          Hong Kong : 9文字】
         private static void Exercise09(List<string> cities) {
-        
-        
-        
+            var result = cities.OrderBy(c => c.Length);
+
+            foreach (var city in result) {
+                Console.WriteLine($"{city} : {city.Length}文字");
+            }
         }
 
         //問題１０　６文字の都市名を表示
@@ -163,9 +166,11 @@
         //        【London
         //          Berlin】
         private static void Exercise10(List<string> cities) {
-            var city = cities.Where(x => x.Length == 6);
-            Console.WriteLine(city);
+            var result = cities.Where(c => c.Length == 6);
 
+            foreach (var city in result) {
+                Console.WriteLine(city);
+            }
         }
     }
 }

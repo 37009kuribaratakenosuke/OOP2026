@@ -25,7 +25,14 @@
         private void InitializeComponent() {
             dtpDate = new DateTimePicker();
             btGet = new Button();
+            nudDay = new NumericUpDown();
             tbOut = new TextBox();
+            dtpBirth = new DateTimePicker();
+            button1 = new Button();
+            tbDays = new TextBox();
+            label1 = new Label();
+            label2 = new Label();
+            ((System.ComponentModel.ISupportInitialize)nudDay).BeginInit();
             SuspendLayout();
             // 
             // dtpDate
@@ -46,23 +53,80 @@
             btGet.UseVisualStyleBackColor = true;
             btGet.Click += btGet_Click;
             // 
+            // nudDay
+            // 
+            nudDay.Location = new Point(75, 171);
+            nudDay.Name = "nudDay";
+            nudDay.Size = new Size(120, 23);
+            nudDay.TabIndex = 3;
+            nudDay.ValueChanged += numericUpDown1_ValueChanged;
+            // 
             // tbOut
             // 
-            tbOut.Location = new Point(26, 124);
+            tbOut.Location = new Point(55, 386);
             tbOut.Name = "tbOut";
             tbOut.Size = new Size(200, 23);
             tbOut.TabIndex = 2;
+            // 
+            // dtpBirth
+            // 
+            dtpBirth.Location = new Point(35, 332);
+            dtpBirth.Name = "dtpBirth";
+            dtpBirth.Size = new Size(200, 23);
+            dtpBirth.TabIndex = 4;
+            // 
+            // button1
+            // 
+            button1.Location = new Point(321, 332);
+            button1.Name = "button1";
+            button1.Size = new Size(75, 23);
+            button1.TabIndex = 5;
+            button1.Text = "計算";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
+            // 
+            // tbDays
+            // 
+            tbDays.Location = new Point(55, 434);
+            tbDays.Name = "tbDays";
+            tbDays.Size = new Size(200, 23);
+            tbDays.TabIndex = 2;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(12, 389);
+            label1.Name = "label1";
+            label1.Size = new Size(31, 15);
+            label1.TabIndex = 6;
+            label1.Text = "年齢";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(3, 442);
+            label2.Name = "label2";
+            label2.Size = new Size(55, 15);
+            label2.TabIndex = 7;
+            label2.Text = "経過日数";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 469);
+            ClientSize = new Size(818, 493);
+            Controls.Add(label2);
+            Controls.Add(label1);
+            Controls.Add(button1);
+            Controls.Add(dtpBirth);
+            Controls.Add(nudDay);
+            Controls.Add(tbDays);
             Controls.Add(tbOut);
             Controls.Add(btGet);
             Controls.Add(dtpDate);
             Name = "Form1";
-            Text = "Form1";
+            Text = "S";
+            ((System.ComponentModel.ISupportInitialize)nudDay).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -71,6 +135,12 @@
 
         private DateTimePicker dtpDate;
         private Button btGet;
+        private NumericUpDown nudDay;
         private TextBox tbOut;
+        private DateTimePicker dtpBirth;
+        private Button button1;
+        private TextBox tbDays;
+        private Label label1;
+        private Label label2;
     }
 }
