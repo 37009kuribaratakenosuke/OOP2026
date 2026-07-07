@@ -32,6 +32,9 @@
             tbDays = new TextBox();
             label1 = new Label();
             label2 = new Label();
+            tbOut3 = new TextBox();
+            label3 = new Label();
+            tbOut4 = new TextBox();
             ((System.ComponentModel.ISupportInitialize)nudDay).BeginInit();
             SuspendLayout();
             // 
@@ -74,6 +77,7 @@
             dtpBirth.Name = "dtpBirth";
             dtpBirth.Size = new Size(200, 23);
             dtpBirth.TabIndex = 4;
+            dtpBirth.ValueChanged += dtpBirth_ValueChanged;
             // 
             // button1
             // 
@@ -104,22 +108,52 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(3, 442);
+            label2.Location = new Point(3, 485);
             label2.Name = "label2";
-            label2.Size = new Size(55, 15);
+            label2.Size = new Size(24, 15);
             label2.TabIndex = 7;
-            label2.Text = "経過日数";
+            label2.Text = "メモ";
+            // 
+            // tbOut3
+            // 
+            tbOut3.Location = new Point(55, 477);
+            tbOut3.Multiline = true;
+            tbOut3.Name = "tbOut3";
+            tbOut3.Size = new Size(200, 23);
+            tbOut3.TabIndex = 2;
+            tbOut3.TextChanged += tbOut3_TextChanged;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(3, 442);
+            label3.Name = "label3";
+            label3.Size = new Size(55, 15);
+            label3.TabIndex = 7;
+            label3.Text = "経過日数";
+            // 
+            // tbOut4
+            // 
+            tbOut4.Location = new Point(55, 516);
+            tbOut4.Multiline = true;
+            tbOut4.Name = "tbOut4";
+            tbOut4.Size = new Size(200, 23);
+            tbOut4.TabIndex = 2;
+            tbOut4.TextChanged += tbOut3_TextChanged;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(818, 493);
+            ClientSize = new Size(818, 583);
+            Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(button1);
             Controls.Add(dtpBirth);
             Controls.Add(nudDay);
+            Controls.Add(tbOut4);
+            Controls.Add(tbOut3);
             Controls.Add(tbDays);
             Controls.Add(tbOut);
             Controls.Add(btGet);
@@ -142,5 +176,8 @@
         private TextBox tbDays;
         private Label label1;
         private Label label2;
+        private TextBox tbOut3;
+        private Label label3;
+        private TextBox tbOut4;
     }
 }

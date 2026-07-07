@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 
 namespace Section01 {
     public partial class Form1 : Form {
@@ -6,7 +7,7 @@ namespace Section01 {
             InitializeComponent();
         }
 
-      
+
         private void btGet_Click(object sender, EventArgs e) {
             DateTime date = dtpDate.Value;
 
@@ -18,20 +19,53 @@ namespace Section01 {
 
         }
 
-      
+
         private void button1_Click(object sender, EventArgs e) {
             DateTime birth = dtpBirth.Value;
             DateTime today = DateTime.Today;
 
-            var age = today.Year - birth.Year;
-            if (today < birth.AddYears(age)) {
-                age--;
-            }
+            //var age = today.Year - birth.Year;
+            //if (today < birth.AddYears(age)) {
+            //    age--;
+            //}
+
+
 
             var days = (today - birth).Days;
 
-            tbOut.Text = $"‚ ‚È‚½‚Í{age.ToString()}Î‚Å‚·";
+            var culture = new CultureInfo("ja-JP");
+            culture.DateTimeFormat.Calendar = new JapaneseCalendar();
+            var dayOfWeek = culture.DateTimeFormat.GetDayName(birth.DayOfWeek);
+
+            
+
+            tbOut.Text = $"‚ ‚È‚½‚Í{GetAge(birth, today)}Î‚Å‚·";
             tbDays.Text = days.ToString();
+            tbOut3.Text = tbOut3.Text = $"¶‚Ü‚ê‚½{birth.Month}ŒŽ{birth.Day}“ú‚Í‘æ{NthWeek(birth)}T‚Ì{dayOfWeek}—j“ú‚Å‚·";
+            tbOut4.Text = 
         }
+
+        private void dtpBirth_ValueChanged(object sender, EventArgs e) {
+
+        }
+
+        static int GetAge(DateTime birthday, DateTime targetDay) {
+            var age = targetDay.Year - birthday.Year;
+            if (targetDay < birthday.AddYears(age)) {
+                age--;
+            }
+            return age;
+        }
+
+        private void tbOut3_TextChanged(object sender, EventArgs e) {
+
+        }
+
+        static int NthWeek(DateTime date) {
+            var firstDay = new DateTime(date.Year, date.Month, 1);
+            var firstDayOfWeek = (int)(firstDay.DayOfWeek);
+            return (date.Day + firstDayOfWeek - 1) / 7 + 1;
+        }
+
     }
 }

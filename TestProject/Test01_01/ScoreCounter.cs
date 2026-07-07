@@ -7,37 +7,41 @@
             _score = ReadScore(filePath);
         }
 
-        //メソッドの概要：splitで分けてname,subject,scoreをリストに追加している
+        // CSVを読み込む
         private static IEnumerable<Student> ReadScore(string filePath) {
-            var sales = new List<Student>();
+            var students = new List<Student>();
             var lines = File.ReadAllLines(filePath);
 
             foreach (string line in lines) {
-
                 var items = line.Split(',');
+
+                if (items.Length != 3)
+                    continue;
+
+                if (!int.TryParse(items[2], out int score))
+                    continue;
 
                 var student = new Student {
                     Name = items[0],
                     Subject = items[1],
-                    Score = int.Parse(items[2])
+                    Score = score
                 };
 
-                sales.Add(student);
+                students.Add(student);
             }
 
-            return sales;
+            return students;
         }
 
-        //メソッドの概要：学生の点数を求めている   
+        // 学生ごとの合計点を求める
         public IDictionary<string, int> GetPerStudentScore() {
             var dict = new Dictionary<string, int>();
 
-            foreach (var sale in _score) {
-
-                if (dict.ContainsKey(sale.Name)) {
-                    dict[sale.Name] += sale.Score;
+            foreach (var student in _score) {
+                if (dict.ContainsKey(student.Name)) {
+                    dict[student.Name] += student.Score;
                 } else {
-                    dict[sale.Name] = sale.Score;
+                    dict[student.Name] = student.Score;
                 }
             }
 
