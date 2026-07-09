@@ -134,10 +134,10 @@
             // 
             // tbOut4
             // 
-            tbOut4.Location = new Point(55, 516);
+            tbOut4.Location = new Point(55, 537);
             tbOut4.Multiline = true;
             tbOut4.Name = "tbOut4";
-            tbOut4.Size = new Size(200, 23);
+            tbOut4.Size = new Size(200, 34);
             tbOut4.TabIndex = 2;
             tbOut4.TextChanged += tbOut3_TextChanged;
             // 

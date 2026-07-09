@@ -21,7 +21,7 @@ namespace Section01 {
 
 
         private void button1_Click(object sender, EventArgs e) {
-            DateTime birth = dtpBirth.Value;
+            DateTime birth = dtpBirth.Value.Date;
             DateTime today = DateTime.Today;
 
             //var age = today.Year - birth.Year;
@@ -41,9 +41,24 @@ namespace Section01 {
 
             tbOut.Text = $"‚ ‚È‚½‚Í{GetAge(birth, today)}Î‚Å‚·";
             tbDays.Text = days.ToString();
-            tbOut3.Text = tbOut3.Text = $"¶‚Ü‚ê‚½{birth.Month}Œ{birth.Day}“ú‚Í‘æ{NthWeek(birth)}T‚Ì{dayOfWeek}—j“ú‚Å‚·";
-            tbOut4.Text = 
-        }
+            tbOut3.Text = $"¶‚Ü‚ê‚½{birth.Month}Œ{birth.Day}“ú‚Í‘æ{NthWeek(birth)}T‚Ì{dayOfWeek}‚Å‚·";
+
+            DateTime nextbirthday = new DateTime(today.Year, birth.Month, birth.Day);
+
+            if(nextbirthday < today) {
+                nextbirthday.AddYears(1);
+            }
+
+            var span = nextbirthday - today;
+
+            if(span.Days == 0) {
+                tbOut4.Text = "’a¶“ú‚Í¡“ú‚Å‚·";
+            } else {
+                tbOut4.Text = $"’a¶“ú‚Ü‚Å‚ ‚Æ{span.Days}“ú‚Å‚·";
+            }
+
+            
+                    }
 
         private void dtpBirth_ValueChanged(object sender, EventArgs e) {
 
