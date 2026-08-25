@@ -28,9 +28,14 @@ namespace CarReportSystem {
                     //P286以降を参考にする（ファイル名：setting.xml）
                     using (var reader = XmlReader.Create("setting.xml")) {
                         var serializer = new XmlSerializer(typeof(Settings));
-                        settings = serializer.Deserialize(reader) as Settings;
-                        //背景色設定
-                        BackColor = Color.FromArgb(settings.MainFormBackColor);
+                        
+                        
+                        //settings = serializer.Deserialize(reader) as Settings;
+                        if(serializer.Deserialize(reader) is Settings loadedSetting) {
+                            settings = loadedSetting;
+                            //背景色設定
+                            BackColor = Color.FromArgb(settings.MainFormBackColor);
+                        }
                     }
                 }
                 catch (Exception ex) {
@@ -150,6 +155,11 @@ namespace CarReportSystem {
                 || (!dgvRecords.CurrentRow.Selected)) return;
 
             //削除したいインデックスを指定してリストから削除
+            if(dgvRecords.CurrentRow?.DataBoundItem is not CarReport carReport) {
+                tsslbMessage.Text = "削除するレポートを選択してください";
+                return;
+            }
+
             listCarReports.RemoveAt(dgvRecords.CurrentRow.Index);
 
             InputItemsUpdate(); //データグリッドビューを更新したら呼ぶメソッド
