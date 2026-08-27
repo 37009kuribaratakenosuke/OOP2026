@@ -5,7 +5,7 @@ namespace CarReportSystem {
     public sealed class Settings {
 
 
-        private const string FileName = "settting.xml";
+        private const string FileName = "setting.xml";
 
         //唯一のSettingオブジェクト
         private static Settings _instance = new Settings();
@@ -23,7 +23,7 @@ namespace CarReportSystem {
         private Settings() { }
 
         public void Load() {
-            if (!File.Exists(FileName)) {
+            if (!File.Exists(FileName)) 
                 return;
 
                 using var reder = XmlReader.Create(FileName);
@@ -33,7 +33,7 @@ namespace CarReportSystem {
                     MainFormBackColor = data.MainFormBackColor;
                 }
 
-            }
+            
 
 
         }

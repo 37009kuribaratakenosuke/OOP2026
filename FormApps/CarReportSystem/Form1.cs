@@ -1,7 +1,5 @@
 using System.ComponentModel;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Xml;
-using System.Xml.Serialization;
 using static CarReportSystem.CarReport;
 
 namespace CarReportSystem {
@@ -21,31 +19,46 @@ namespace CarReportSystem {
         private void Form1_Load(object sender, EventArgs e) {
             //設定ファイルを読み込み背景色を設定する（逆シリアル化）
 
-            //ファイルが存在するか？
-            if (File.Exists("setting.xml")) {
-                try {
+            try {
+                Settings.Instance.Load();
 
-                    //P286以降を参考にする（ファイル名：setting.xml）
-                    using (var reader = XmlReader.Create("setting.xml")) {
-                        var serializer = new XmlSerializer(typeof(Settings));
-                        
-                        
-                        //settings = serializer.Deserialize(reader) as Settings;
-                        if(serializer.Deserialize(reader) is Settings loadedSetting) {
-                            settings = loadedSetting;
-                            //背景色設定
-                            BackColor = Color.FromArgb(Settings.Instance.MainFormBackColor);
-                        }
-                    }
-                }
-                catch (Exception ex) {
-                    tsslbMessage.Text = "設定ファイル読み込みエラー";
-                    MessageBox.Show(ex.Message);//←より具体的なエラーを出力         
-                }
-            } else {
-                tsslbMessage.Text = "設定ファイルがありません";
+                BackColor = Color.FromArgb(Settings.Instance.MainFormBackColor);
+
             }
-        }
+            catch (Exception ex) {
+                tsslbMessage.Text = "設定ファイル読み込みエラー";
+                MessageBox.Show(ex.Message);//←より具体的なエラーを出力         
+            }
+        } 
+
+
+
+
+        //    //ファイルが存在するか？
+        //    if (File.Exists("setting.xml")) {
+        //        try {
+
+        //            //P286以降を参考にする（ファイル名：setting.xml）
+        //            using (var reader = XmlReader.Create("setting.xml")) {
+        //                var serializer = new XmlSerializer(typeof(Settings));
+                        
+                        
+        //                //settings = serializer.Deserialize(reader) as Settings;
+        //                if(serializer.Deserialize(reader) is Settings loadedSetting) {
+        //                    settings = loadedSetting;
+        //                    //背景色設定
+        //                    BackColor = Color.FromArgb(Settings.Instance.MainFormBackColor);
+        //                }
+        //            }
+        //        }
+        //        catch (Exception ex) {
+        //            tsslbMessage.Text = "設定ファイル読み込みエラー";
+        //            MessageBox.Show(ex.Message);//←より具体的なエラーを出力         
+        //        }
+        //    } else {
+        //        tsslbMessage.Text = "設定ファイルがありません";
+        //    }
+        //}
 
         //追加ボタンイベントハンドラ
         private void btAddRecord_Click(object sender, EventArgs e) {
@@ -230,10 +243,17 @@ namespace CarReportSystem {
             //設定ファイルへ色情報を保存する処理（シリアル化）
             //P284以降を参考にする（ファイル名：setting.xml）
 
-            using (var writer = XmlWriter.Create("setting.xml")) {
-                var serializer = new XmlSerializer(Settings.Instance.GetType());
-                serializer.Serialize(writer, Settings.Instance);
-            }
+            try {
+                Settings.Instance.Save();
+            }catch (Exception ex) {
+        tsslbMessage.Text = "設定ファイル保存エラー";
+        MessageBox.Show(ex.Message);
+    }
+
+            //using (var writer = XmlWriter.Create("setting.xml")) {
+            //    var serializer = new XmlSerializer(Settings.Instance.GetType());
+            //    serializer.Serialize(writer, Settings.Instance);
+            //}
         }
 
         private void 開くToolStripMenuItem_Click(object sender, EventArgs e) {
