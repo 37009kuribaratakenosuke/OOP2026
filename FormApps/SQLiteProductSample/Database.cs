@@ -11,7 +11,8 @@ public static class Database
 
     //SQLiteへ接続するための接続文字列
     private static readonly string ConnectionString =
-        $"Data Source = {DatabasePath}";
+        $"Data Source={DatabasePath}";
+
 
     //DBファイルの保存場所を外部から確認するための読み取り専用プロパティ
     public static string FilePath => DatabasePath;
@@ -36,7 +37,8 @@ public static class Database
         CREATE TABLE IF NOT EXISTS Product(
            Id       INTEGER PRIMARY KEY AUTOINCREMENT,
            Name     TEXT NOT NULL,
-           Price    INTEGER NOT NULL CHECK <Price> = 0)
+           Price    INTEGER NOT NULL CHECK (Price >= 0)
+        
 
 
         );
