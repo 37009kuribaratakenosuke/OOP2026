@@ -120,7 +120,7 @@ namespace CarReportSystem {
             tbReport.Text = string.Empty;
             pbPicture.Image = null;
 
-            dgvRecords.ClearSelection();//ƒZƒ‹‚Ì‘I‘ğ‚ğ‰ğœ‚·‚é
+            dgvRecords.ClearSelection();
         }
 
         private void SetRadioButtonMaker(MakerGroup targetMaker) {
