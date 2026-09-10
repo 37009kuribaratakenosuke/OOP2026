@@ -25,7 +25,7 @@ namespace CarReportSystem {
 
 
         //DBの初期化処理
-        public static void Initialize() {39
+        public static void Initialize() {
             //接続オブジェクトを生成する。
             using var connection = GetConnection();
 

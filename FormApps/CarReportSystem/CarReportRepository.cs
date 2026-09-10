@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.Data.Sqlite;
+using System;
 using System.Collections.Generic;
+using System.Drawing.Imaging;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -33,11 +35,11 @@ namespace CarReportSystem {
                         reader.GetString(1),
                         "yyyy-MM-dd",
                         CultureInfo.InvariantCulture),
-                    Author =  reader.GetString(2),
+                    Author = reader.GetString(2),
                     Maker = (CarReport.MakerGroup)reader.GetInt32(3),
                     CarName = reader.GetString(4),
                     Report = reader.GetString(5),
-                    Picture = null
+                    Picture = reader.IsDBNull(6)? null: BytesToImage(reader.GetFieldValue<byte[]>(6))
                 });
             }
             return carReports;
@@ -45,7 +47,7 @@ namespace CarReportSystem {
 
 
         }
-        public int Add(DateTime date, string author, CarReport.MakerGroup maker, string carName, string report, Image? picture) {
+        public int Add(CarReport report) {
             using var connection = Database.GetConnection();
             connection.Open();
 
@@ -60,14 +62,26 @@ namespace CarReportSystem {
         SELECT last_insert_rowid();
         """;
 
-            command.Parameters.AddWithValue("$date", date);
-            command.Parameters.AddWithValue("$author", author);
-            command.Parameters.AddWithValue("$maker", (int)maker);
-            command.Parameters.AddWithValue("$carName", carName);
-            command.Parameters.AddWithValue("$report", report);
-            command.Parameters.AddWithValue("$picture", picture);
+            command.Parameters.AddWithValue("$date", report.Date.ToString("yyyy-MM-dd",CultureInfo.InvariantCulture));
+            command.Parameters.AddWithValue("$author", report.Author);
+            command.Parameters.AddWithValue("$maker", (int)report.Maker);
+            command.Parameters.AddWithValue("$carName", report.CarName);
+            command.Parameters.AddWithValue("$report", report.Report);
+            byte[]? pictureData = ImageToBytes(report.Picture);
 
-            var result = command.ExecuteScalar();
+            var pictureParameter = command.Parameters.Add(
+                "$picture",
+                SqliteType.Blob);
+                if(pictureData is not null) {
+                pictureParameter.Value = pictureData;
+            } else {
+                pictureParameter.Value = DBNull.Value;
+            }
+
+
+
+
+                var result = command.ExecuteScalar();
 
             if (result is null) {
                 throw new InvalidOperationException("登録したレポートのIDを取得できませんでした。");
@@ -98,7 +112,8 @@ namespace CarReportSystem {
             command.Parameters.AddWithValue("$maker", (int)carReport.Maker);
             command.Parameters.AddWithValue("$carName", carReport.CarName);
             command.Parameters.AddWithValue("$report", carReport.Report);
-            command.Parameters.AddWithValue("$picture", carReport.Picture);
+            command.Parameters.AddWithValue("$picture",ImageToBytes(carReport.Picture) ?? (object)DBNull.Value);
+
             command.Parameters.AddWithValue("$Id", carReport.Id);
 
             var result = command.ExecuteNonQuery();
@@ -134,5 +149,20 @@ namespace CarReportSystem {
             }
         }
 
+        private static byte[]? ImageToBytes(Image? image) {
+            if (image is null) return null;
+
+            using var stream = new MemoryStream();
+            image.Save(stream, image.RawFormat);
+            return stream.ToArray();
+        }
+
+        // SQLiteのBLOB（byte[]）をImageへ変換する
+        private static Image BytesToImage(byte[] data) {
+            using var stream = new MemoryStream(data);
+            using var image = Image.FromStream(stream);
+            // MemoryStream破棄後も利用できるようBitmapとしてコピーする。
+            return new Bitmap(image);
+        }
     }
 }
