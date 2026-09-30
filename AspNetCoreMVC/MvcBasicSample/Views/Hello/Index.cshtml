@@ -1,10 +1,23 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+
+@model List<MvcBasicSample.Models.Product>;
+
 @{
-    ViewData["Title"] = "Hello"; //タブ用のタイトル
+    ViewData["Title"] = "商品一覧";
+    int total = 0;
 }
 
+<h1>商品情報</h1>
 
-<h1>はじめてのMVC</h1>  @*画面内の見出し*@
-<p>ControllerからViewが表示されました</p>
+<ul>
+    @foreach (var product in Model) {
+        <li>@product.Name @product.Price</li>
+        total += product.Price;
+    }
+    
+</ul>
+<p>合計:@total 円</p>
+
+
