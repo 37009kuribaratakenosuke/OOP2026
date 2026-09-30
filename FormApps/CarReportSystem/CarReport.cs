@@ -18,7 +18,7 @@
         public string Report { get; set; } = string.Empty;  //レポート
         [System.ComponentModel.DisplayName("画像")]
         public Image? Picture { get; set; }     //画像
-        [System.ComponentModel.DisplayName("Id")]
+        [System.ComponentModel.DisplayName("Id")] //ID
         public int Id { get; set; }
     }
 }
