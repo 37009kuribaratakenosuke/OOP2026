@@ -1,0 +1,51 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using SelfOrderSystem.Data;
+using SelfOrderSystem.Models;
+using SelfOrderSystem.Services;
+using SelfOrderSystem.ViewModels;
+
+namespace SelfOrderSystem.Controllers;
+
+public class MenuController : Controller {
+    private readonly AppDbContext _db;
+    private readonly CartService _cart;
+
+    public MenuController(AppDbContext db, CartService cart) {
+        _db = db;
+        _cart = cart;
+    }
+
+    public async Task<IActionResult> Index(int? categoryId) {
+        var categories = await _db.Categories
+            .AsNoTracking()
+            .OrderBy(c => c.SortOrder)
+            .ToListAsync();
+
+        var query = _db.Products
+            .AsNoTracking()
+            .Include(p => p.Category)
+            .Where(p => p.IsActive);
+
+        if (categoryId.HasValue) {
+            query = query.Where(p => p.CategoryId == categoryId.Value);
+        }
+
+        var products = await query
+            .OrderBy(p => p.Category!.SortOrder)
+            .ThenBy(p => p.Name)
+            .ToListAsync();
+
+        var cartItems = _cart.GetItems();
+
+        var vm = new MenuViewModel {
+            Categories = categories,
+            Products = products,
+            SelectedCategoryId = categoryId,
+            CartItemCount = cartItems.Sum(x => x.Quantity),
+            CartTotal = cartItems.Sum(x => x.LineTotal)
+        };
+
+        return View(vm);
+    }
+}
