@@ -5,15 +5,28 @@
         Height="450"
         Width="800">
 
-    <StackPanel Orientation="Vertical">
-        <Button Content="ファイル選択"
-                Click="Button_Click"/>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="4*"/>
+            
+        </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="5*"/>
+            
+        </Grid.RowDefinitions>
+        <Button Grid.Row="0" Grid.Column="0" Content="ファイル選択"
+         Click="Button_Click"/>
 
-        <TextBox x:Name="TextArea"
-                 TextWrapping="Wrap"
-                 AcceptsReturn="True"
-                 VerticalScrollBarVisibility="Auto"
-                 Height="400"/>
-    </StackPanel>
+        <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" x:Name="TextArea"
+          TextWrapping="Wrap"
+          AcceptsReturn="True"
+          Height="400" VerticalScrollBarVisibility="Disabled"/>
+    </Grid>
+
+       
+    
 
 </Window>
