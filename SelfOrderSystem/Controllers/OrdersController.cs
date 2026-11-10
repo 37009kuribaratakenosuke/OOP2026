@@ -11,10 +11,12 @@ namespace SelfOrderSystem.Controllers;
 public class OrdersController : Controller {
     private readonly AppDbContext _db;      // 商品と注文のDB操作 
     private readonly CartService _cart;    // Session内のカート操作 
+    private readonly IOrderService _orderService;    
 
-    public OrdersController(AppDbContext db, CartService cart) {
+    public OrdersController(AppDbContext db, CartService cart, IOrderService orderService ) {
         _db = db;
         _cart = cart;
+        _orderService = orderService;
     }
 
     [HttpGet]
@@ -57,6 +59,25 @@ public class OrdersController : Controller {
             model.Items = cartItems;     // 再表示用の一覧を戻す 
             return View("Checkout", model);
         }
+
+        //注文処理をServiceへ依頼
+        var result = await _orderService.PlaceAsync(cartItems, model.TableNumber);
+
+        //エラーかチェック
+        if (!result.IsSuccess) {
+            foreach(var error in result.Errors) {
+                ModelState.AddModelError("", error);   //エラーを画面表示する
+
+            }
+            model.Items = cartItems;
+            return View("Checkout", model);
+
+        }
+
+
+
+
+
 
         var order = new Order {
             PublicId = Guid.NewGuid(),

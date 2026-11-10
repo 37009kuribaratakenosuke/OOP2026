@@ -22,6 +22,13 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped<CartService>();
 
+builder.Services.AddScoped<IOrderService, OrderService>();
+
+
+
+
+
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment()) {
