@@ -1,22 +1,138 @@
-tyuuhtml {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
+/* ===== 全体 ===== */
 body {
-  margin-bottom: 60px;
+    background: #0f172a;
+    color: #fff;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* ===== ナビゲーション ===== */
+.navbar {
+    background: rgba(15, 23, 42, 0.95) !important;
+    border-bottom: 1px solid #1e293b;
+    backdrop-filter: blur(20px);
+}
+
+.navbar-brand {
+    color: #38bdf8 !important;
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+}
+
+/* 商品写真を一定の高さで表示 */
+.so-product-photo {
+    display: block;
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+    background: #f0eee9;
+}
+/* 写真の登録がない商品に表示 */
+.so-product-photo--empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    font-size: 0.95rem;
+} 
+
+
+/* ===== 商品カード ===== */
+.menu-card {
+    background: #1e293b;
+    border: 1px solid #334155;
+    border-radius: 24px;
+    overflow: hidden;
+    transition: all .3s ease;
+}
+
+    .menu-card:hover {
+        transform: translateY(-8px);
+        border-color: #38bdf8;
+        box-shadow: 0 0 20px rgba(56,189,248,.3), 0 0 40px rgba(56,189,248,.15);
+    }
+
+    .menu-card img {
+        height: 220px;
+        width: 100%;
+        object-fit: cover;
+    }
+
+/* ===== 商品名 ===== */
+.menu-title {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 700;
+}
+
+/* ===== 商品説明 ===== */
+.menu-description {
+    color: #94a3b8;
+}
+
+/* ===== 価格 ===== */
+.menu-price {
+    color: #22c55e;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* ===== 注文ボタン ===== */
+.btn-order {
+    width: 100%;
+    border: none;
+    border-radius: 14px;
+    padding: 12px;
+    background: linear-gradient( 135deg, #06b6d4, #3b82f6 );
+    color: white;
+    font-weight: bold;
+    transition: .3s;
+}
+
+    .btn-order:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 15px #38bdf8, 0 0 40px rgba(56,189,248,.5);
+    }
+
+/* ===== 注文パネル ===== */
+.order-panel {
+    background: #1e293b;
+    border-radius: 24px;
+    padding: 25px;
+    border: 1px solid #334155;
+}
+
+/* ===== 合計 ===== */
+.order-total {
+    color: #22c55e;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+/* ===== 会計ボタン ===== */
+.checkout-btn {
+    width: 100%;
+    border: none;
+    border-radius: 16px;
+    padding: 18px;
+    background: linear-gradient( 135deg, #22c55e, #16a34a );
+    color: white;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: .3s;
+}
+
+    .checkout-btn:hover {
+        transform: scale(1.03);
+        box-shadow: 0 0 20px rgba(34,197,94,.5);
+    }
+
+/* ===== スクロールバー ===== */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #38bdf8;
+    border-radius: 10px;
 }
