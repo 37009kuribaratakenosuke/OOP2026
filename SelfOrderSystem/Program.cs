@@ -61,6 +61,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.MapHub<StaffOrdersHub>("/staffOrdersHur");
+app.MapHub<StaffOrdersHub>("/staffOrdersHub");
 
 app.Run();

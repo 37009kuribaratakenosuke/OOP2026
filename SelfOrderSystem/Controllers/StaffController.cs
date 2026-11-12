@@ -4,13 +4,23 @@ using SelfOrderSystem.Data;
 using SelfOrderSystem.Models;
 // AppDbContextを使用 
 
+using Microsoft.AspNetCore.SignalR;
+using SelfOrderSystem.Hubs;
+
 namespace SelfOrderSystem.Controllers;
 
 public class StaffController : Controller {
     private readonly AppDbContext _db; // DBへの接続を担当 
+    private readonly IHubContext<StaffOrdersHub> _hubContext;
+    private readonly ILogger<StaffController> _logger;
 
-    public StaffController(AppDbContext db) {
-        _db = db; // DIで受け取ったものを保存 
+    // 既存のStaffControllerコンストラクタを置換 
+    public StaffController(AppDbContext db,
+        IHubContext<StaffOrdersHub> hubContext,
+        ILogger<StaffController> logger) {
+        _db = db; // 既存のDB操作 
+        _hubContext = hubContext; // SignalRで通知 
+        _logger = logger; // 通知エラーを記録 
     }
 
     [HttpGet] // 注文一覧を表示するGETリクエスト 
@@ -32,13 +42,14 @@ public class StaffController : Controller {
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Advance(int id) {
-        // 注文IDから対象の注文を検索 
+        // 注文IDから対象の注文を検索
         var order = await _db.Orders.FindAsync(id);
+
         if (order == null) {
-            return NotFound(); // 該当する注文がない 
+            return NotFound();
         }
 
-        // 現在の状態に応じて次の状態へ変更 
+        // 注文状態を1段階進める
         if (order.Status == OrderStatus.New) {
             order.Status = OrderStatus.Accepted;
         } else if (order.Status == OrderStatus.Accepted) {
@@ -46,13 +57,31 @@ public class StaffController : Controller {
         } else if (order.Status == OrderStatus.Cooking) {
             order.Status = OrderStatus.Served;
         } else {
-            // 提供済みの注文は変更しない 
             return RedirectToAction(nameof(Index));
         }
 
-        await _db.SaveChangesAsync(); // 変更をDBへ保存 
-        return RedirectToAction(nameof(Index)); // 一覧へ戻る 
+        // DBに保存
+        await _db.SaveChangesAsync();
+
+        try {
+            // 注文したお客様に通知
+            await _hubContext.Clients
+                .Group($"order-{order.PublicId:N}")
+                .SendAsync("OrderStatusChanged");
+
+            // スタッフ画面全体に通知
+            await _hubContext.Clients.All
+                .SendAsync("OrdersChanged");
+        }
+        catch (Exception ex) {
+            _logger.LogWarning(ex, "状態更新の通知に失敗");
+        }
+
+        // 最後に一覧へ戻る
+        return RedirectToAction(nameof(Index));
     }
+
+
 
 }
 
