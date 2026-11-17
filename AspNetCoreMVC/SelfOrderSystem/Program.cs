@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SelfOrderSystem.Data;
+using SelfOrderSystem.Services;
+using SelfOrderSystem.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,19 @@ builder.Services.AddDbContext<AppDbContext>(
         options =>options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
     );
 /////////
+
+builder.Services.AddDistributedMemoryCache(); // Session の保存領域としてアプリのメモリを使う
+builder.Services.AddSession(options => // Session 機能を登録
+{
+    options.IdleTimeout = TimeSpan.FromHours(2);    // 2 時間操作がなければ期限切れ
+    options.Cookie.HttpOnly = true;                 // JavaScript からSession ID を読めないようにする
+    options.Cookie.IsEssential = true;              // Session ID 用Cookie を必須Cookie として扱う
+});
+builder.Services.AddHttpContextAccessor(); // Controller 以外のクラスからHttpContext を取得できるようにする
+builder.Services.AddScoped<CartService>(); // CartService をDI へ登録しControllerで受け取れるようにする
+
+builder.Services.AddScoped<IOrderService, OrderService>();  //サービス層を作成したことによる追加
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -34,10 +49,16 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+// 追加
+app.UseSession(); // このリクエストでSession を使えるようにする
+/////////
+
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapHub<StaffOrdersHub>("/staffOrdersHub");
 
 app.Run();
