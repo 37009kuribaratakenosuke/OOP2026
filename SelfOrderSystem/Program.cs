@@ -1,6 +1,12 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
+
+using SelfOrderSystem.Models;
 using SelfOrderSystem.Data;
 using SelfOrderSystem.Services;
+using SelfOrderSystem.Hubs;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,12 +15,12 @@ builder.Services.AddControllersWithViews();
 
 // 追加
 builder.Services.AddDbContext<AppDbContext>(
-        options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+        options =>options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
     );
 /////////
 
 builder.Services.AddDistributedMemoryCache(); // Session の保存領域としてアプリのメモリを使う
-builder.Services.AddSession(options => // Session 機能を登録 
+builder.Services.AddSession(options => // Session 機能を登録
 {
     options.IdleTimeout = TimeSpan.FromHours(2);    // 2 時間操作がなければ期限切れ
     options.Cookie.HttpOnly = true;                 // JavaScript からSession ID を読めないようにする
@@ -23,9 +29,23 @@ builder.Services.AddSession(options => // Session 機能を登録
 builder.Services.AddHttpContextAccessor(); // Controller 以外のクラスからHttpContext を取得できるようにする
 builder.Services.AddScoped<CartService>(); // CartService をDI へ登録しControllerで受け取れるようにする
 
+builder.Services.AddScoped<IOrderService, OrderService>();  //サービス層を作成したことによる追加
+builder.Services.AddSignalR();
 
-// builder.Services.AddScoped<CartService>(); の近くに追加 
-builder.Services.AddScoped<IOrderService, OrderService>();
+
+// スタッフのパスワード照合用のサービス
+builder.Services.AddScoped<IPasswordHasher<StaffUser>,PasswordHasher<StaffUser>>();
+
+// Cookie を使ったログイン方式を登録
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(options => {
+                    options.LoginPath = "/Account/Login";           // 未ログイン時の遷移先
+                    options.AccessDeniedPath = "/Account/Denied";   // 権限不足時の遷移先
+                    options.Cookie.HttpOnly = true;                 // JavaScript から読み取り不可
+                    options.Cookie.SecurePolicy = CookieSecurePolicy.Always; // HTTPS 限定
+                    options.ExpireTimeSpan = TimeSpan.FromHours(8); // 認証チケットの有効期間
+                });
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -46,17 +66,16 @@ if (!app.Environment.IsDevelopment()) {
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
-
-// 追加
 app.UseSession(); // このリクエストでSession を使えるようにする
-/////////
-
+app.UseAuthentication(); // 認証Cookie からログイン状態を復元
 app.UseAuthorization();
-
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.MapHub<StaffOrdersHub>("/staffOrdersHub");
+
+//初回だけスタッフアカウントを登録
+await StaffAccountSeeder.InitializeAsync(app.Services);
 app.Run();

@@ -54,9 +54,9 @@ public class OrdersController : Controller {
         HttpContext.Session.SetString(
                                 "LastOrderPublicId",
                                 result.PublicId!.Value.ToString());
-
+        
         _cart.Clear(); // 保存成功後にカートを空にする
-
+        
         return RedirectToAction(nameof(Complete), new { id = result.PublicId });
     }
 

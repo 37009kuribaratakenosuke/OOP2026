@@ -17,8 +17,5 @@ public static class OrderStatusExtensions {
             OrderStatus.Cooking => "提供完了",
             _ => "完了"
         };
-
-
     }
 }
-

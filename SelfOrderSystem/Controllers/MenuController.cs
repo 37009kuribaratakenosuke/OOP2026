@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using SelfOrderSystem.Data;
 using SelfOrderSystem.ViewModels;
 using SelfOrderSystem.Services;
+using SelfOrderSystem.Models;
 
 namespace SelfOrderSystem.Controllers;
 public class MenuController : Controller {
@@ -39,12 +40,20 @@ public class MenuController : Controller {
 
         var cartItems = _cart.GetItems();   // Session からカートを取得
 
+
         var vm = new MenuViewModel {
             Categories = categories,
             Products = products,
             SelectedCategoryId = categoryId,
-            CartItemCount = cartItems.Sum(x => x.Quantity),   //商品数量の合計
-            CartTotal = cartItems.Sum(x => x.LineTotal),      //小計の合計
+
+            // カート内の商品数量の合計
+            CartItemCount = cartItems.Sum(x => x.Quantity),
+
+            // カート全体の合計金額
+            CartTotal = cartItems.Sum(x => x.LineTotal),
+
+            // 商品写真や商品名を含むカート明細
+            CartItems = cartItems
         };
 
         return View(vm);    // ViewModel をView へ渡す
