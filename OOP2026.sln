@@ -183,6 +183,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "演習問題", "演習問�
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exercise03", "Chapter15\演習問題\Exercise03\Exercise03.csproj", "{13C5DCC3-0966-4E90-A64D-BDC3E806CB84}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "VibeCoding", "VibeCoding", "{E58C0664-72FC-4ABF-9C0B-F265012D668D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherApp", "VibeCoding\WeatherApp\WeatherApp.csproj", "{C906A743-ADBF-4855-8C8A-670B6B087939}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -405,6 +409,10 @@ Global
 		{13C5DCC3-0966-4E90-A64D-BDC3E806CB84}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13C5DCC3-0966-4E90-A64D-BDC3E806CB84}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13C5DCC3-0966-4E90-A64D-BDC3E806CB84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C906A743-ADBF-4855-8C8A-670B6B087939}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C906A743-ADBF-4855-8C8A-670B6B087939}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C906A743-ADBF-4855-8C8A-670B6B087939}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C906A743-ADBF-4855-8C8A-670B6B087939}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -485,6 +493,7 @@ Global
 		{3AD24FDF-ABD8-47A4-B097-2D992AEAE853} = {B7582A42-1AC7-409C-8D1F-733D01E892D4}
 		{751385D2-98BF-4E1E-96FA-F7CB2EC9104F} = {E559DFA2-CA5A-448B-AF18-25957A117C65}
 		{13C5DCC3-0966-4E90-A64D-BDC3E806CB84} = {751385D2-98BF-4E1E-96FA-F7CB2EC9104F}
+		{C906A743-ADBF-4855-8C8A-670B6B087939} = {E58C0664-72FC-4ABF-9C0B-F265012D668D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A1F3302B-0E47-460A-87E6-7AC9A9C81B80}
